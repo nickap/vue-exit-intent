@@ -70,11 +70,11 @@ export default {
         if (localStorage.getItem("exitintent")) {
           let value = JSON.parse(localStorage.getItem("exitintent"));
           let old = value.timestamp;
-          let current = new Date().getTime().toString();
+          let current = new Date().getTime();
           this.canBeShown =
             current - old > this.showAfterDays * 86400000 ? true : false;
-          /* We can delete the line undeneath after debugging */
-          this.canBeShown = this.debugging == true ? true : false;
+          /* Ignore the above calculation if we are in debug mode*/
+          if (this.debugging) this.canBeShown = true;
         } else this.canBeShown = true;
       },
       /* Regex source = http://detectmobilebrowsers.com/ */
