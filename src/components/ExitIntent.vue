@@ -54,10 +54,13 @@ export default {
   name: "exit-intent",
   data() {
     return {
-      canBeShown: true /* change it to false after debugging */,
-      minDelayBeforeShow: 0 /* change it to 2000 after debugging */,
-      showAfterDays: 10,
-      isMobile: false
+      debugging: true, /* Change it to false after debugging/review */
+      showAfterDays: 10, /* Value in days */
+      minDelayBeforeShow: 0, /* Value in minutes */
+      scrollPercentageBeforeShow: 0, /* 0 - 100 */
+      scrollPercentageFlag: false,
+      isMobile: false,
+      canBeShown: false
     };
   },
   methods: {
@@ -68,8 +71,8 @@ export default {
       this.$emit("showPopUp");
       let value = { value: true, timestamp: new Date().getTime() };
       localStorage.setItem("exitintent", JSON.stringify(value));
-      /* Turn the show flag to false. We only want to present the popUp once */
-      this.canBeShown = true; /* change it to false after debugging */
+      /* False cause we only want to present the popUp once */
+      this.canBeShown = this.debugging == true ? true : false;
     },
     checkLocalStorage() {
       if (localStorage.getItem("exitintent")) {
@@ -78,7 +81,8 @@ export default {
         let current = new Date().getTime().toString();
         this.canBeShown =
           current - old > this.showAfterDays * 86400000 ? true : false;
-        this.canBeShown = true; /* delete after debugging */
+        /* We can delete the line undeneath after debugging */
+        this.canBeShown = this.debugging == true ? true : false;
       } else this.canBeShown = true;
     },
     /* Regex source = http://detectmobilebrowsers.com/ */
@@ -96,10 +100,33 @@ export default {
         )
           self.isMobile = true;
       })(navigator.userAgent || navigator.vendor || window.opera);
+      /* eslint-enable */
+    },
+    checkScrollPercentage() {
+      if (this.scrollPercentageBeforeShow == 0) {
+        this.scrollPercentageFlag = true;
+        return;
+      }
+
+      let h = document.documentElement;
+      let b = document.body;
+      let st = "scrollTop";
+      let sh = "scrollHeight";
+
+      let percentage =
+        ((h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight)) * 100;
+
+      this.scrollPercentageFlag =
+        this.scrollPercentageBeforeShow <= percentage ? true : false;
     },
     mouseOutCallback(evt) {
       this.checkLocalStorage();
-      if (evt.toElement === null && evt.relatedTarget === null && this.canBeShown)
+      if (
+        evt.toElement === null &&
+        evt.relatedTarget === null &&
+        this.canBeShown &&
+        this.scrollPercentageFlag
+      )
         this.showPopUp();
     },
     scrollCallback(isScrolling, startPos, finalPos, destUpwards, i = 0) {
@@ -112,28 +139,33 @@ export default {
       isScrolling = setTimeout(() => {
         finalPos = window.scrollY;
         destUpwards = finalPos - startPos;
-        if (destUpwards < -300) this.showPopUp();
+        if (destUpwards < -300 && this.canBeShown && this.scrollPercentageFlag)
+          this.showPopUp();
       }, 50);
     }
   },
   mounted: function() {
+    this.canBeShown = this.debugging == true ? true : false;
     this.checkLocalStorage();
     this.checkDevice();
+    this.checkScrollPercentage();
 
     if (!this.isMobile) {
       setTimeout(() => {
         document.addEventListener("mouseout", evt => {
           this.mouseOutCallback(evt);
         });
-      }, this.minDelayBeforeShow);
-    } else if (this.isMobile) {
-      setTimeout(() => {
-        let isScrolling, startPos, finalPos, destUpwards, i;
-        document.addEventListener("scroll", () => {
-          this.scrollCallback(isScrolling, startPos, finalPos, destUpwards, i);
-        });
-      }, this.minDelayBeforeShow);
+      }, this.minDelayBeforeShow * 60000); /* Convert ms to minutes */
     }
+    setTimeout(() => {
+      let isScrolling, startPos, finalPos, destUpwards, i;
+      document.addEventListener("scroll", () => {
+        if (!this.scrollPercentageFlag) this.checkScrollPercentage();
+        if (this.isMobile) {
+          this.scrollCallback(isScrolling, startPos, finalPos, destUpwards, i);
+        }
+      });
+    }, this.minDelayBeforeShow * 60000); /* Convert ms to minutes */
   }
 };
 </script>
@@ -168,19 +200,18 @@ export default {
   color: #4aae9b;
 }
 
+.exit-intent-body {
+  padding: 20px 10px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
 .exit-intent-footer {
   padding: 30px 20px;
   display: flex;
   flex-wrap: wrap;
   border-top: 1px solid #eeeeee;
   justify-content: space-between;
-}
-
-.exit-intent-body {
-  position: relative;
-  padding: 20px 10px;
-  font-size: 16px;
-  line-height: 1.5;
 }
 
 .btn-close {
@@ -223,7 +254,14 @@ export default {
   transition: opacity 0.5s ease;
 }
 @media screen and (max-width: 480px) {
+  .exit-intent-header {
+    padding: 0 20px;
+  }
+  .exit-intent-body {
+    padding: 0 10px;
+  }
   .exit-intent-footer {
+    padding: 20px 20px;
     flex-wrap: wrap;
     justify-content: center;
   }
