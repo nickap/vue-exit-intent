@@ -34,7 +34,7 @@
             name="mail"
             required
           />
-          
+
           <button
             type="button"
             class="btn btn-green"
@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       show: true /* change it to false after debugging */,
-      delayms: 2000,
+      minDelayBeforeShow: 0 /* change it to 2000 after debugging */,
       showAfterDays: 10,
       isMobile: false
     };
@@ -74,10 +74,10 @@ export default {
         this.show = true; /* delete after debugging */
       } else this.show = true;
     },
-    /* eslint-disable */
     /* Regex source = http://detectmobilebrowsers.com/ */
     checkDevice() {
       let self = this;
+      /* eslint-disable */
       (function(a) {
         if (
           /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(
@@ -89,8 +89,8 @@ export default {
         )
           self.isMobile = true;
       })(navigator.userAgent || navigator.vendor || window.opera);
+      /* eslint-enable */
     }
-    /* eslint-enable */
   },
   mounted: function() {
     this.checkLocalStorage();
@@ -99,6 +99,7 @@ export default {
     if (!this.isMobile) {
       setTimeout(() => {
         document.addEventListener("mouseout", evt => {
+          this.checkLocalStorage();
           if (
             evt.toElement === null &&
             evt.relatedTarget === null &&
@@ -107,10 +108,38 @@ export default {
             this.$emit("show");
             let value = { value: true, timestamp: new Date().getTime() };
             localStorage.setItem("exitintent", JSON.stringify(value));
+            /* Turn the show flag to false. We only want to present the popUp once */
             this.show = true; /* change it to false after debugging */
+            /* We could run this.checkLocalStorage(); in the beggining of the callback of mouseout evt */
           }
         });
-      }, this.delay);
+      }, this.minDelayBeforeShow);
+    } else if (this.isMobile) {
+      setTimeout(() => {
+        let isScrolling, startPos, finalPos, destUpwards;
+        let i = 0;
+        document.addEventListener("scroll", () => {
+          i++;
+          if (i == 1) startPos = window.scrollY;
+
+          /* Clear our timeout throughout the scroll */
+          window.clearTimeout(isScrolling);
+
+          isScrolling = setTimeout(() => {
+            finalPos = window.scrollY;
+            destUpwards = finalPos - startPos;
+            if (destUpwards < -1000) {
+              this.$emit("show");
+              let value = { value: true, timestamp: new Date().getTime() };
+              localStorage.setItem("exitintent", JSON.stringify(value));
+              /* Turn the show flag to false. We only want to present the popUp once */
+              this.show = true; /* change it to false after debugging */
+              /* We could run this.checkLocalStorage(); in the beggining of the callback of mouseout evt */
+            }
+            i = 0;
+          }, 50);
+        });
+      }, this.minDelayBeforeShow);
     }
   }
 };
@@ -135,24 +164,21 @@ export default {
   overflow-x: auto;
   display: flex;
   flex-direction: column;
+  margin: 20px;
 }
 
 .exit-intent-header {
   padding: 10px 20px;
-  display: flex;
-}
-.exit-intent-footer {
-  padding: 30px 20px;
-  display: flex;
-}
-
-.exit-intent-header {
   padding-top: 0;
+  display: flex;
   border-bottom: 1px solid #eeeeee;
   color: #4aae9b;
 }
 
 .exit-intent-footer {
+  padding: 30px 20px;
+  display: flex;
+  flex-wrap: wrap;
   border-top: 1px solid #eeeeee;
   justify-content: space-between;
 }
@@ -202,5 +228,15 @@ export default {
 .exit-intent-fade-enter-active,
 .exit-intent-fade-leave-active {
   transition: opacity 0.5s ease;
+}
+@media screen and (max-width: 480px) {
+  .exit-intent-footer {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .input-field {
+    margin: 0 0 10px;
+    flex-basis: 100%;
+  }
 }
 </style>
