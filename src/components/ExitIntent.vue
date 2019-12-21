@@ -29,10 +29,38 @@
 <script>
 export default {
   name: "exit-intent",
+  data() {
+    return {
+      show: false,
+      delayms: 2000,
+      showAfterDays: 10
+    };
+  },
   methods: {
     close() {
       this.$emit("close");
+    },
+    checkLocalStorage() {
+      if (localStorage.getItem("exitintent")) {
+        let value = JSON.parse(localStorage.getItem("exitintent"));
+        let old = value.timestamp;
+        let current = new Date().getTime().toString();
+        this.show = current - old > this.showAfterDays * 86400000 ? true : false;
+      } else this.show = true;
     }
+  },
+  mounted: function() {
+    this.checkLocalStorage();
+    setTimeout(() => {
+      document.addEventListener("mouseout", evt => {
+        if (evt.toElement === null && evt.relatedTarget === null && this.show) {
+          this.$emit("show");
+          let value = { value: true, timestamp: new Date().getTime() };
+          localStorage.setItem("exitintent", JSON.stringify(value));
+          this.show = false;
+        }
+      });
+    }, this.delay);
   }
 };
 </script>

@@ -2,10 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
-    <button type="button" class="btn" @click="show">
-      Open pop-up!
-    </button>
-    <ExitIntent v-show="isVisible" @close="close" />
+    <ExitIntent v-show="isVisible" @close="close" @show="show" />
   </div>
 </template>
 
