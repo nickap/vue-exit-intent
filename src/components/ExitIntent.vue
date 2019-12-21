@@ -2,24 +2,47 @@
   <transition name="exit-intent-fade">
     <div class="exit-intent-backdrop" role="dialog">
       <div class="exit-intent" ref="exit-intent">
-        <header class="exit-intent-header">
-            <h2>
-              Subscribe and get a 10% discount!
-            </h2>
+        <button
+          type="button"
+          class="btn-close"
+          @click="close"
+          aria-label="Close"
+        >
+          x
+        </button>
 
-            <button type="button" class="btn-close btn-right" @click="close" aria-label="Close exit-intent">
-              x
-            </button>
+        <header class="exit-intent-header">
+          <h2>
+            Subscribe and get a 10% discount!
+          </h2>
         </header>
 
         <section class="exit-intent-body">
-            Gime your mail
+          <p>
+            Sign in on our newsletter and get a 10% discount on your next
+            payment.<br />
+            <strong>It’s completely free.</strong><br />
+            You’ll receive by email a promo code to get the 10% discount.
+          </p>
         </section>
 
         <footer class="exit-intent-footer">
-            <button type="button" class="btn btn-green" @click="close" aria-label="Close exit-intent">
-              Close!
-            </button>
+          <input
+            class="input-field"
+            type="text"
+            placeholder="Email address"
+            name="mail"
+            required
+          />
+          
+          <button
+            type="button"
+            class="btn btn-green"
+            @click="close"
+            aria-label="Subscribe"
+          >
+            Subscribe
+          </button>
         </footer>
       </div>
     </div>
@@ -31,9 +54,10 @@ export default {
   name: "exit-intent",
   data() {
     return {
-      show: false,
+      show: true /* change it to false after debugging */,
       delayms: 2000,
-      showAfterDays: 10
+      showAfterDays: 10,
+      isMobile: false
     };
   },
   methods: {
@@ -45,34 +69,54 @@ export default {
         let value = JSON.parse(localStorage.getItem("exitintent"));
         let old = value.timestamp;
         let current = new Date().getTime().toString();
-        this.show = current - old > this.showAfterDays * 86400000 ? true : false;
+        this.show =
+          current - old > this.showAfterDays * 86400000 ? true : false;
+        this.show = true; /* delete after debugging */
       } else this.show = true;
+    },
+    /* eslint-disable */
+    /* Regex source = http://detectmobilebrowsers.com/ */
+    checkDevice() {
+      let self = this;
+      (function(a) {
+        if (
+          /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(
+            a
+          ) ||
+          /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(
+            a.substr(0, 4)
+          )
+        )
+          self.isMobile = true;
+      })(navigator.userAgent || navigator.vendor || window.opera);
     }
+    /* eslint-enable */
   },
   mounted: function() {
     this.checkLocalStorage();
-    setTimeout(() => {
-      document.addEventListener("mouseout", evt => {
-        if (evt.toElement === null && evt.relatedTarget === null && this.show) {
-          this.$emit("show");
-          let value = { value: true, timestamp: new Date().getTime() };
-          localStorage.setItem("exitintent", JSON.stringify(value));
-          this.show = false;
-        }
-      });
-    }, this.delay);
+    this.checkDevice();
+
+    if (!this.isMobile) {
+      setTimeout(() => {
+        document.addEventListener("mouseout", evt => {
+          if (
+            evt.toElement === null &&
+            evt.relatedTarget === null &&
+            this.show
+          ) {
+            this.$emit("show");
+            let value = { value: true, timestamp: new Date().getTime() };
+            localStorage.setItem("exitintent", JSON.stringify(value));
+            this.show = true; /* change it to false after debugging */
+          }
+        });
+      }, this.delay);
+    }
   }
 };
 </script>
 
 <style>
-.btn {
-  padding: 8px 16px;
-  border-radius: 3px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
 .exit-intent-backdrop {
   position: fixed;
   top: 0;
@@ -93,32 +137,38 @@ export default {
   flex-direction: column;
 }
 
-.exit-intent-header,
+.exit-intent-header {
+  padding: 10px 20px;
+  display: flex;
+}
 .exit-intent-footer {
-  padding: 15px;
+  padding: 30px 20px;
   display: flex;
 }
 
 .exit-intent-header {
+  padding-top: 0;
   border-bottom: 1px solid #eeeeee;
   color: #4aae9b;
-  justify-content: space-between;
 }
 
 .exit-intent-footer {
   border-top: 1px solid #eeeeee;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .exit-intent-body {
   position: relative;
   padding: 20px 10px;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .btn-close {
+  align-self: flex-end;
   border: none;
   font-size: 20px;
-  padding: 20px;
+  margin: 5px 5px 0 0;
   cursor: pointer;
   font-weight: bold;
   color: #4aae9b;
@@ -126,9 +176,21 @@ export default {
 }
 
 .btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
   color: white;
   background: #4aae9b;
   border: 1px solid #4aae9b;
+  border-radius: 2px;
+}
+
+.input-field {
+  flex-grow: 1;
+  padding: 8px 16px;
+  margin-right: 20px;
+  font-size: 14px;
+  border: 1px solid #eeeeee;
   border-radius: 2px;
 }
 
