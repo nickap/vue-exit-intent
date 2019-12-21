@@ -5,7 +5,7 @@
       msg="Welcome to Your Vue.js App"
       dummyContent="Dummy Content to make the document scrollable"
     />
-    <ExitIntent v-show="isVisible" @close="close" @show="show" />
+    <ExitIntent v-show="isVisible" @closePopUp="close" @showPopUp="show" />
   </div>
 </template>
 

@@ -5,7 +5,7 @@
         <button
           type="button"
           class="btn-close"
-          @click="close"
+          @click="closePopUp"
           aria-label="Close"
         >
           x
@@ -38,7 +38,7 @@
           <button
             type="button"
             class="btn btn-green"
-            @click="close"
+            @click="closePopUp"
             aria-label="Subscribe"
           >
             Subscribe
@@ -54,25 +54,32 @@ export default {
   name: "exit-intent",
   data() {
     return {
-      show: true /* change it to false after debugging */,
+      canBeShown: true /* change it to false after debugging */,
       minDelayBeforeShow: 0 /* change it to 2000 after debugging */,
       showAfterDays: 10,
       isMobile: false
     };
   },
   methods: {
-    close() {
-      this.$emit("close");
+    closePopUp() {
+      this.$emit("closePopUp");
+    },
+    showPopUp() {
+      this.$emit("showPopUp");
+      let value = { value: true, timestamp: new Date().getTime() };
+      localStorage.setItem("exitintent", JSON.stringify(value));
+      /* Turn the show flag to false. We only want to present the popUp once */
+      this.canBeShown = true; /* change it to false after debugging */
     },
     checkLocalStorage() {
       if (localStorage.getItem("exitintent")) {
         let value = JSON.parse(localStorage.getItem("exitintent"));
         let old = value.timestamp;
         let current = new Date().getTime().toString();
-        this.show =
+        this.canBeShown =
           current - old > this.showAfterDays * 86400000 ? true : false;
-        this.show = true; /* delete after debugging */
-      } else this.show = true;
+        this.canBeShown = true; /* delete after debugging */
+      } else this.canBeShown = true;
     },
     /* Regex source = http://detectmobilebrowsers.com/ */
     checkDevice() {
@@ -89,7 +96,24 @@ export default {
         )
           self.isMobile = true;
       })(navigator.userAgent || navigator.vendor || window.opera);
-      /* eslint-enable */
+    },
+    mouseOutCallback(evt) {
+      this.checkLocalStorage();
+      if (evt.toElement === null && evt.relatedTarget === null && this.canBeShown)
+        this.showPopUp();
+    },
+    scrollCallback(isScrolling, startPos, finalPos, destUpwards, i = 0) {
+      i++;
+      if (i == 1) startPos = window.scrollY;
+
+      /* Clear our timeout throughout the scroll */
+      window.clearTimeout(isScrolling);
+
+      isScrolling = setTimeout(() => {
+        finalPos = window.scrollY;
+        destUpwards = finalPos - startPos;
+        if (destUpwards < -300) this.showPopUp();
+      }, 50);
     }
   },
   mounted: function() {
@@ -99,45 +123,14 @@ export default {
     if (!this.isMobile) {
       setTimeout(() => {
         document.addEventListener("mouseout", evt => {
-          this.checkLocalStorage();
-          if (
-            evt.toElement === null &&
-            evt.relatedTarget === null &&
-            this.show
-          ) {
-            this.$emit("show");
-            let value = { value: true, timestamp: new Date().getTime() };
-            localStorage.setItem("exitintent", JSON.stringify(value));
-            /* Turn the show flag to false. We only want to present the popUp once */
-            this.show = true; /* change it to false after debugging */
-            /* We could run this.checkLocalStorage(); in the beggining of the callback of mouseout evt */
-          }
+          this.mouseOutCallback(evt);
         });
       }, this.minDelayBeforeShow);
     } else if (this.isMobile) {
       setTimeout(() => {
-        let isScrolling, startPos, finalPos, destUpwards;
-        let i = 0;
+        let isScrolling, startPos, finalPos, destUpwards, i;
         document.addEventListener("scroll", () => {
-          i++;
-          if (i == 1) startPos = window.scrollY;
-
-          /* Clear our timeout throughout the scroll */
-          window.clearTimeout(isScrolling);
-
-          isScrolling = setTimeout(() => {
-            finalPos = window.scrollY;
-            destUpwards = finalPos - startPos;
-            if (destUpwards < -1000) {
-              this.$emit("show");
-              let value = { value: true, timestamp: new Date().getTime() };
-              localStorage.setItem("exitintent", JSON.stringify(value));
-              /* Turn the show flag to false. We only want to present the popUp once */
-              this.show = true; /* change it to false after debugging */
-              /* We could run this.checkLocalStorage(); in the beggining of the callback of mouseout evt */
-            }
-            i = 0;
-          }, 50);
+          this.scrollCallback(isScrolling, startPos, finalPos, destUpwards, i);
         });
       }, this.minDelayBeforeShow);
     }
