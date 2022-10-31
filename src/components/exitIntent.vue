@@ -7,7 +7,14 @@ const props = defineProps({
   navigateBeforeShowSeconds: { type: Number, required: false, default: 0 },
   mouseOutEnabled: { type: Boolean, required: false, default: true },
   showByDefault: { type: Boolean, required: false, default: false },
-  showCloseBtn: { type: Boolean, required: false, default: true }
+  showCloseBtn: { type: Boolean, required: false, default: true },
+  color: { type: String, required: false, default: '#555' },
+  bgroundColor: { type: String, required: false, default: '#fefefe' },
+  bdropColor: {
+    type: String,
+    required: false,
+    default: 'rgba(0, 0, 0, 0.7)'
+  }
 });
 
 const show = ref(false);
@@ -153,13 +160,13 @@ const showModal = () => {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: v-bind(bdropColor);
 }
 .exit-intent-content {
   position: relative;
   margin: auto;
-  color: #555;
-  background-color: #fefefe;
+  color: v-bind(color);
+  background-color: v-bind(bgroundColor);
 }
 
 .btn-close {
@@ -171,12 +178,12 @@ const showModal = () => {
   padding: 4px;
   cursor: pointer;
   font-weight: bold;
-  color: #555;
+  color: v-bind(color);
   background-color: transparent;
 }
 
 .fallback-content {
-  background-color: #fefefe;
+  background-color: v-bind(bgroundColor);
   overflow-x: auto;
   display: flex;
   flex-direction: column;
@@ -188,11 +195,11 @@ const showModal = () => {
   padding: 25px 10px;
   text-align: center;
   border-bottom: 1px solid #eee;
-  color: #555;
+  color: v-bind(color);
 }
 
 .fallback-content-body {
-  color: #555;
+  color: v-bind(color);
   padding: 20px 10px;
   font-size: 16px;
   line-height: 1.5;
@@ -211,8 +218,8 @@ const showModal = () => {
   font-size: 14px;
   cursor: pointer;
   color: white;
-  background: #555;
-  border: 1px solid #555;
+  background: v-bind(color);
+  border: 1px solid v-bind(color);
   border-radius: 2px;
 }
 
