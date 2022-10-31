@@ -161,6 +161,7 @@ const showModal = () => {
   left: 0;
   right: 0;
   background-color: v-bind(bdropColor);
+  z-index: 999;
 }
 .exit-intent-content {
   position: relative;
@@ -180,6 +181,7 @@ const showModal = () => {
   font-weight: bold;
   color: v-bind(color);
   background-color: transparent;
+  z-index: 999;
 }
 
 .fallback-content {

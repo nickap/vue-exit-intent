@@ -1,21 +1,21 @@
 <template>
   <div id="homepage">
-    <exit-intent
+    <vue-exit-intent
       :repeatAfterHours="1"
       :scrollPercentage="0"
       :navigateBeforeShowSeconds="0"
       :mouseOutEnabled="true"
       :showByDefault="false"
     >
-    </exit-intent>
+    </vue-exit-intent>
   </div>
 </template>
 
 <script>
-import exitIntent from './components/exitIntent.vue';
+import vueExitIntent from './components/vueExitIntent.vue';
 export default {
   name: 'app',
-  components: { exitIntent }
+  components: { vueExitIntent }
 };
 </script>
 

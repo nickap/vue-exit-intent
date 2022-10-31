@@ -1,6 +1,18 @@
 {
   "name": "vue-exit-intent",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/vue-exit-intent.umd.js",
+  "module": "./dist/vue-exit-intent.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-exit-intent.es.js",
+      "require": "./dist/vue-exit-intent.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
