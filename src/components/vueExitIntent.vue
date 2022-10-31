@@ -14,7 +14,8 @@ const props = defineProps({
     type: String,
     required: false,
     default: 'rgba(0, 0, 0, 0.7)'
-  }
+  },
+  LSItemKey: { type: String, required: false, default: 'vue-exit-intent' }
 });
 
 const show = ref(false);
@@ -74,7 +75,7 @@ const isAllowedToShow = () => {
     return true;
   } else {
     /* props.repeatAfterHours is 0 -> Do not show more than once */
-    let alreadyShowed = localStorage.getItem('vue-exit-intent');
+    let alreadyShowed = localStorage.getItem(props.LSItemKey);
     if (alreadyShowed) {
       return false;
     } else return true;
@@ -82,8 +83,8 @@ const isAllowedToShow = () => {
 };
 
 const isLocalStorageExpired = () => {
-  if (localStorage.getItem('vue-exit-intent')) {
-    let oldMillis = parseInt(localStorage.getItem('vue-exit-intent'));
+  if (localStorage.getItem(props.LSItemKey)) {
+    let oldMillis = parseInt(localStorage.getItem(props.LSItemKey));
     let currentMillis = new Date().getTime();
     return currentMillis - oldMillis > props.repeatAfterHours * 1000 * 60 * 60
       ? true
@@ -102,7 +103,7 @@ const closeModal = () => {
 const showModal = () => {
   show.value = true;
   document.body.style.overflowY = 'hidden';
-  localStorage.setItem('vue-exit-intent', JSON.stringify(new Date().getTime()));
+  localStorage.setItem(props.LSItemKey, JSON.stringify(new Date().getTime()));
 };
 </script>
 

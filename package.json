@@ -1,6 +1,6 @@
 {
   "name": "vue-exit-intent",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Vue 3 pop-up that shows up when a user is leaving, or another threshold reached.",
   "author": "nickap <dev.texng@simplelogin.com>",
   "license": "MIT",

@@ -63,6 +63,7 @@ Your content will get displayed via [Slots](https://vuejs.org/guide/components/s
 | **color** | '#555' | String  | false |
 | **bgroundColor** | '#fefefe' | String  | false |
 | **bdropColor** | 'rgba(0, 0, 0, 0.7)' | String  | false |
+| **LSItemKey** | 'vue-exit-intent' | String  | false |
 
 ### Props Description
 - **repeatAfterHours**  
@@ -100,6 +101,10 @@ Background Color.
 
 - **bdropColor**  
 BackDrop Color.
+
+- **LSItemKey**  
+Key of Local Storage item.
+You can use a different key to show multiple pop-ups with different behaviour/content.
 
 ### Use it with defaults
 Please add your content in between the opening and closing tag.
