@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 
 const props = defineProps({
   repeatAfterHours: { type: Number, required: false, default: 24 * 7 },
-  scrollPercentage: { type: Number, required: false, default: 50 },
+  scrollPercentage: { type: Number, required: false, default: 0 },
   navigateBeforeShowSeconds: { type: Number, required: false, default: 0 },
   mouseOutEnabled: { type: Boolean, required: false, default: true },
   showByDefault: { type: Boolean, required: false, default: false },

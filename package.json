@@ -1,6 +1,9 @@
 {
   "name": "vue-exit-intent",
   "version": "1.0.0",
+  "description": "Vue 3 pop-up that shows up when a user is leaving, or another threshold reached.",
+  "author": "nickap <dev.texng@simplelogin.com>",
+  "license": "MIT",
   "files": [
     "dist"
   ],
@@ -30,5 +33,9 @@
     "eslint-plugin-vue": "^9.3.0",
     "prettier": "^2.7.1",
     "vite": "^3.1.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nickap/vue-exit-intent"
   }
 }
