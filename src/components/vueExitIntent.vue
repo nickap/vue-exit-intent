@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({
   repeatAfterHours: { type: Number, required: false, default: 24 * 7 },
@@ -19,6 +19,7 @@ const props = defineProps({
 });
 
 const show = ref(false);
+let scrollHandler = null;
 
 onMounted(() => {
   if (props.mouseOutEnabled) {
@@ -35,7 +36,20 @@ onMounted(() => {
     if (isAllowedToShow() && isLocalStorageExpired()) showModal();
   }
   if (props.scrollPercentage) {
-    window.addEventListener('scroll', throttledScroll());
+    scrollHandler = throttleScroll();
+    window.addEventListener('scroll', scrollHandler);
+  }
+});
+
+onUnmounted(() => {
+  if (props.mouseOutEnabled) {
+    document.documentElement.removeEventListener(
+      'mouseleave',
+      handleMouseLeave
+    );
+  }
+  if (props.scrollPercentage) {
+    window.removeEventListener('scroll', scrollHandler);
   }
 });
 
@@ -43,7 +57,7 @@ const handleMouseLeave = () => {
   if (isAllowedToShow() && isLocalStorageExpired()) showModal();
 };
 
-const throttledScroll = () => {
+const throttleScroll = () => {
   let throttleMillis = 500;
   let time = Date.now();
   return () => {

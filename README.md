@@ -114,9 +114,9 @@ If you don't add your pop-up content, a fallback content will be shown.
 ```
 
 # Contribute
-Attach event listeners only if we are sure will show the popup (check localstorage on mount)?
-I just realized I a mot removing listeners on unmount.
-Maybe typescript? tests?
+Attach event listeners only if we are sure will show the popup (check localstorage on mount)?  
+Maybe typescript?  
+tests?
 
 ## Project Setup
 
