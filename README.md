@@ -2,6 +2,8 @@
 Vue 3 pop-up that shows up when a user is leaving, or another threshold reached.
 ## A flexible Pop-up not only for marketing purposes.
 
+[Demo](https://vue-exit-intent.netlify.app/)
+
 # Usage
 You can use this package as a **global component**.
 ### Add the package
