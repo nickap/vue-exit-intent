@@ -60,6 +60,7 @@ Your content will get displayed via [Slots](https://vuejs.org/guide/components/s
 | **scrollPercentage** | 0 | Number | false |
 | **navigateBeforeShowSeconds** | 0 | Number | false |
 | **mouseOutEnabled** | true | Boolean | false |
+| **touchDeviceSensitivity** | 5 | Number  | false |
 | **showByDefault** | false | Boolean | false |
 | **showCloseBtn** | true | Boolean | false |
 | **color** | '#555' | String  | false |
@@ -84,6 +85,12 @@ The percentage that the user has to scroll before the pop-up gets triggered.
 How many seconds the user has to navigate before the pop-up gets triggered.  
 **Give 0 to disable.**  
 **This one TRIGGERS the popup.**
+
+- **touchDeviceSensitivity**  
+On touch devices where there is no mouseleave event, the popup will get triggered on fast (touch)scroll up.
+The larger the number you will give, the more sesitive will be the pop-up on touch devices.  
+**Give 0 to disable.**  
+**This one TRIGGERS the popup on touch devices.**
 
 - **mouseOutEnabled**  
 If false. Mouse out event will not trigger the pop-up. The user would have to reach navigateBeforeShowSeconds or scrollPercentage to get the popup.

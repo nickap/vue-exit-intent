@@ -6,7 +6,9 @@ const props = defineProps({
   scrollPercentage: { type: Number, required: false, default: 0 },
   /** TODO:  Fix prop name. Maybe: 'waitSecondsAndShow' */
   navigateBeforeShowSeconds: { type: Number, required: false, default: 0 },
+  /** TODO:  Fix prop name. Maybe: 'exitIntentEnabled' */
   mouseOutEnabled: { type: Boolean, required: false, default: true },
+  touchDeviceSensitivity: { type: Number, required: false, default: 5 },
   showByDefault: { type: Boolean, required: false, default: false },
   showCloseBtn: { type: Boolean, required: false, default: true },
   color: { type: String, required: false, default: '#555' },
@@ -21,10 +23,16 @@ const props = defineProps({
 
 const show = ref(false);
 let scrollHandler = null;
+let touchDeviceExitIntentHandler = null;
 
 onMounted(() => {
   if (props.mouseOutEnabled) {
-    document.documentElement.addEventListener('mouseleave', handleMouseLeave);
+    if (props.touchDeviceSensitivity && isTouchDevice()) {
+      touchDeviceExitIntentHandler = showOnFastTouchScrollUp();
+      window.addEventListener('scroll', touchDeviceExitIntentHandler);
+    } else {
+      document.documentElement.addEventListener('mouseleave', handleMouseLeave);
+    }
   }
   if (props.navigateBeforeShowSeconds) {
     if (isAllowedToShow() && isLocalStorageExpired()) {
@@ -45,6 +53,7 @@ onMounted(() => {
 onUnmounted(() => {
   document.documentElement.removeEventListener('mouseleave', handleMouseLeave);
   window.removeEventListener('scroll', scrollHandler);
+  window.removeEventListener('scroll', touchDeviceExitIntentHandler);
 });
 
 const handleMouseLeave = () => {
@@ -101,6 +110,50 @@ const isLocalStorageExpired = () => {
     /* Local Storage item doesn't exist. We'll show the Modal for the first time */
     return true;
   }
+};
+
+const isTouchDevice = () => {
+  if ('maxTouchPoints' in navigator) {
+    return navigator.maxTouchPoints > 0;
+  } else if ('msMaxTouchPoints' in navigator) {
+    return navigator.msMaxTouchPoints > 0;
+  } else {
+    const mQ = window.matchMedia && matchMedia('(pointer:coarse)');
+    if (mQ && mQ.media === '(pointer:coarse)') {
+      return !!mQ.matches;
+    } else if ('orientation' in window) {
+      /* Deprecated, used as a fallback */
+      return true;
+    } else {
+      /* Fallback to user agent sniffing*/
+      const UA = navigator.userAgent;
+      return (
+        /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
+        /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
+      );
+    }
+  }
+};
+
+const showOnFastTouchScrollUp = () => {
+  let isScrolling, startPos, finalPos, destUpwards;
+  let i = 0;
+  return () => {
+    i++;
+    if (i == 1) startPos = window.scrollY;
+    /* Clear our timeout throughout the scroll */
+    window.clearTimeout(isScrolling);
+    isScrolling = setTimeout(() => {
+      finalPos = window.scrollY;
+      destUpwards = startPos - finalPos;
+      if (destUpwards > 5000 / props.touchDeviceSensitivity) {
+        if (isAllowedToShow() && isLocalStorageExpired()) {
+          showModal();
+        }
+      }
+      i = 0;
+    }, 50);
+  };
 };
 
 const closeModal = () => {
