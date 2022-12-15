@@ -1,8 +1,10 @@
-# Exit Intent Pop-up for VUE 3
-Vue 3 pop-up that shows up when a user is leaving, or another threshold reached.
-## A flexible Pop-up not only for marketing purposes.
+# Exit Intent Modal Pop-up for VUE 3
+Vue 3 Modal Pop-up that shows up when a user is leaving, or another threshold reached.
+## A flexible Modal Pop-up not only for marketing purposes.
 
 [Demo](https://vue-exit-intent.netlify.app/)
+
+This package created in favor of [this](https://dev.to/nickap/exit-intent-pop-up-how-to-publish-on-npm-vue-3-3bhm) guide.
 
 # Usage
 You can use this package as a **global component**.
@@ -10,8 +12,8 @@ You can use this package as a **global component**.
 ```
 npm i vue-exit-intent
 ```
-### Your main.js should iclude:
-```
+### Add it to your vue app:
+```javascript
 import vueExitIntent from "vue-exit-intent";
 import 'vue-exit-intent/dist/style.css';
 
@@ -21,7 +23,7 @@ const app = createApp(App);
 app.use(vueExitIntent);
 ```
 > See example main.js below:
-```
+```javascript
 import { createApp } from "vue";
 import App from "./App.vue";
 import "./assets/main.css";
@@ -39,17 +41,15 @@ app.mount("#app");
 ```
 
 ### Finally use the component like this
-```
+```javascript
 <vue-exit-intent>Your Content Here</vue-exit-intent>
 ```  
 Your content will get displayed via [Slots](https://vuejs.org/guide/components/slots.html).
 ### Pass available props like this
-```
+```javascript
 <vue-exit-intent
     :repeatAfterHours="360"
     :navigateBeforeShowSeconds="0"
-    :color="'#555'"
-    :bdropColor="'rgba(0, 0, 0, 0.7)'"
 >
 </vue-exit-intent>
 ```
@@ -69,31 +69,33 @@ Your content will get displayed via [Slots](https://vuejs.org/guide/components/s
 
 ### Props Description
 - **repeatAfterHours**  
-After how many hours you want the popup to get triggered again.
-"0" to disable. Giving a "0", the popup will be shown only once! Until the localstrage of the user gets cleared.
+After how many hours you want the popup to get triggered again.  
 When a user gets the popup that exact timestamp is stored in localstorage and its taken into account next time the user will visit your page.  
-This one runs a CHECK before show.
+Giving a zero, the popup will be shown only once! Until the localstrage of the user gets cleared.  
+**Give 0 to disable.**  
+**This one runs a CHECK before show.**
 
 - **scrollPercentage**  
-"0" to disable.
 The percentage that the user has to scroll before the pop-up gets triggered.  
-This one TRIGGERS the popup.
+**Give 0 to disable.**  
+**This one TRIGGERS the popup.**
 
 - **navigateBeforeShowSeconds**  
-"0" to disable. How many seconds the user has to navigate before the pop-up gets triggered.  
-This one TRIGGERS the popup.
+How many seconds the user has to navigate before the pop-up gets triggered.  
+**Give 0 to disable.**  
+**This one TRIGGERS the popup.**
 
 - **mouseOutEnabled**  
 If false. Mouse out event will not trigger the pop-up. The user would have to reach navigateBeforeShowSeconds or scrollPercentage to get the popup.
-Ir true, well.. you know.  
-This one TRIGGERS the popup.
+Ir true, well.. you know, the pop-up is set to get showed on user exit-intent  
+**This one TRIGGERS the popup.**
 
 - **showByDefault**  
 Show On Mount. When a user visit your page.
 
 - **showCloseBtn**  
-Show a closing button "X" (top-right).
-*You might want to be a lil bit more aggresive begging for attention.*
+Show a closing button "X" (top-right).  
+*You might want to be a lil bit more aggresive asking attention.*
 
 - **color**  
 "X" Button color.
@@ -117,8 +119,8 @@ If you don't add your pop-up content, a fallback content will be shown.
 
 # Contribute
 Attach event listeners only if we are sure will show the popup (check localstorage on mount)?  
-Maybe typescript?  
-tests?
+typescript  
+tests  
 
 ## Project Setup
 

@@ -24,16 +24,19 @@ const removeLSKey = () => {
 </script>
 
 <template>
-  Move your mouse outside the document
-  <div v-if="LSItem">
-    The Pop-up has been shown. There is a '{{ LSItemKey }}' in your
-    localStorage.<br />The Pop-up can be shown again in
-    <strong>{{ LSItem }}</strong> milliseconds
-    <br />
-    Do you want to trigger the Pop-up again?
-    <button @click="removeLSKey">Remove LS key</button>
-  </div>
   <div id="homepage">
+    <p>
+      <b>Desktop</b>: Move your mouse outside the document.<br />
+      <b>Touch Device</b>: After you scroll down the document, scroll up fast.
+    </p>
+    <div v-if="LSItem">
+      The Pop-up has been shown. <br />There is an item with key: '{{
+        LSItemKey
+      }}' in your localStorage.<br />
+      <br />
+      Do you want to trigger the Pop-up again?
+      <button @click="removeLSKey">Remove LS key</button>
+    </div>
     <vue-exit-intent :LSItemKey="LSItemKey"></vue-exit-intent>
   </div>
 </template>

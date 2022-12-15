@@ -4,6 +4,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 const props = defineProps({
   repeatAfterHours: { type: Number, required: false, default: 24 * 7 },
   scrollPercentage: { type: Number, required: false, default: 0 },
+  /** TODO:  Fix prop name. Maybe: 'waitSecondsAndShow' */
   navigateBeforeShowSeconds: { type: Number, required: false, default: 0 },
   mouseOutEnabled: { type: Boolean, required: false, default: true },
   showByDefault: { type: Boolean, required: false, default: false },
@@ -42,15 +43,8 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  if (props.mouseOutEnabled) {
-    document.documentElement.removeEventListener(
-      'mouseleave',
-      handleMouseLeave
-    );
-  }
-  if (props.scrollPercentage) {
-    window.removeEventListener('scroll', scrollHandler);
-  }
+  document.documentElement.removeEventListener('mouseleave', handleMouseLeave);
+  window.removeEventListener('scroll', scrollHandler);
 });
 
 const handleMouseLeave = () => {

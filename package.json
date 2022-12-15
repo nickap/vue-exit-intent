@@ -38,5 +38,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/nickap/vue-exit-intent"
-  }
+  },
+  "keywords": [
+    "exit",
+    "intent",
+    "mouse",
+    "leave",
+    "modal",
+    "popup",
+    "pop-up",
+    "vue3"
+  ]
 }
