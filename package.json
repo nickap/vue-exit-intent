@@ -7,14 +7,15 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/vue-exit-intent.umd.js",
-  "module": "./dist/vue-exit-intent.es.js",
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/vue-exit-intent.es.js",
-      "require": "./dist/vue-exit-intent.umd.js"
-    },
-    "./dist/style.css": "./dist/style.css"
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js",
+      "types": "./dist/index.d.ts"
+    }
   },
   "scripts": {
     "dev": "vite",
@@ -43,11 +44,12 @@
     "prettier": "^2.7.1",
     "typescript": "~4.8.4",
     "vite": "^3.1.8",
+    "vite-plugin-dts": "^2.2.0",
     "vue-tsc": "^1.2.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nickap/vue-exit-intent"
+    "url": "git+https://github.com/nickap/vue-exit-intent.git"
   },
   "keywords": [
     "exit",
@@ -62,5 +64,9 @@
     "popup",
     "pop-up",
     "vue3"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/nickap/vue-exit-intent/issues"
+  },
+  "homepage": "https://github.com/nickap/vue-exit-intent#readme"
 }

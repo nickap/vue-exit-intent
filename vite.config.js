@@ -2,6 +2,7 @@ import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
+import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -10,9 +11,9 @@ export default defineConfig(({ mode }) => {
     return {
       build: {
         lib: {
-          entry: resolve(__dirname, 'src/index.js'),
+          entry: resolve(__dirname, 'src/index.ts'),
           name: 'vue-exit-intent',
-          fileName: (format) => `vue-exit-intent.${format}.js`
+          fileName: (format) => `index.${format}.js`
         },
         rollupOptions: {
           external: ['vue'],
@@ -23,7 +24,15 @@ export default defineConfig(({ mode }) => {
           }
         }
       },
-      plugins: [vue()],
+      plugins: [
+        vue(),
+        dts({
+          insertTypesEntry: true,
+          include: ['src'],
+          exclude: ['src/utils'],
+          outDir: 'dist'
+        })
+      ],
       resolve: {
         alias: {
           '@': fileURLToPath(new URL('./src', import.meta.url))
