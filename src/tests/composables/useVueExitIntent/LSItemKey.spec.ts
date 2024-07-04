@@ -3,12 +3,12 @@ import { useVueExitIntent } from '@/composables/useVueExitIntent';
 import { defaultOptions } from '@/utils';
 import { shallowMount } from '@vue/test-utils';
 
-describe('useVueExitIntent composable localStorage tests', () => {
+describe('localStorage dependent functionalities', () => {
   afterEach(() => {
     localStorage.clear();
   });
 
-  test('Respects & handles localStorage values', async () => {
+  test('Sets LSItemKey on trigger', async () => {
     const userOptions = {
       ...defaultOptions,
       triggerOnPageLoad: true,

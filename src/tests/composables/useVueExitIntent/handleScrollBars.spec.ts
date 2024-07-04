@@ -3,7 +3,7 @@ import { useVueExitIntent } from '@/composables/useVueExitIntent';
 import { defaultOptions } from '@/utils';
 import { shallowMount } from '@vue/test-utils';
 
-describe('useVueExitIntent composable basic funcionality', () => {
+describe('Respects option handleScrollbars', () => {
   afterEach(() => {
     localStorage.clear();
   });

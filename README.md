@@ -1,16 +1,16 @@
-# Use Composition API to power your exit intent strategy.
-### A composable to show your content when a user is leaving, or another threshold reached.
+# Enhance User Engagement with Exit Intent Detection.
+### A composable to show your modal when a user is about to leave the page or another threshold reached.
 [Demo](https://vue-exit-intent.netlify.app/)
 
-This package created in favor of [this](https://dev.to/nickap/exit-intent-pop-up-how-to-publish-on-npm-vue-3-3bhm) guide.
+The very first version of this package created in favor of [this](https://dev.to/nickap/exit-intent-pop-up-how-to-publish-on-npm-vue-3-3bhm) old guide. [Here](https://dev.to/nickap/use-vue-exit-intent-a-vue-composable-to-power-your-exit-intent-content-4hlh) is an updated article regarding the latest version.
 
 # Usage
-### Import the composable and show your modal according to the value of `isShowing`.
+### Import the composable and show your content according to the value of `isShowing`.
 ## Add the package
 ```
 npm i vue-exit-intent
 ```
-## Use the component like this
+## Use the composable
 ``` javascript
 <sript setup lang="ts">
 import { useVueExitIntent } from 'vue-exit-intent'
@@ -93,7 +93,8 @@ If true, your modal pop-up is set to get triggered on user exit-intent.
 Time in milliseconds to debounce user's scrolling  
 
 - **triggerOnPageLoad**  
-Show your modal pop-up immediately When a user visits your page.
+Show your modal pop-up immediately When a user visits your page.  
+**This one TRIGGERS the popup.**
 
 - **handleScrollBars**  
 Composable will handle the value of: `document.body.style.overflowY`.  
@@ -104,12 +105,15 @@ Key of Local Storage item.
 You can use a different key to show multiple pop-ups with different behaviour/content.
 
 ## Contribute
-Feel free to contribute, message me for your idea.  
+Feel free to contribute, message me for your ideas.  
 - Write tests.  
-- Report a bug.  
+- Report bugs.  
 - Share this project.  
 - Give a star if you like it.  
-- Documentation  
+- Improve the documentation.  
+- Open an issue if you have any.
+
+# Instructions for Contributors
 
 ## Project Setup
 
