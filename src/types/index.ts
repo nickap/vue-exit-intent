@@ -1,4 +1,4 @@
-export interface IOptions {
+export type Options = {
   repeatAfterDays: number;
   scrollPercentageToTrigger: number;
   delaySecondsAndTrigger: number;
@@ -8,18 +8,8 @@ export interface IOptions {
   triggerOnPageLoad: boolean;
   handleScrollBars: boolean;
   LSItemKey: string;
-}
-export interface IUserOptions {
-  repeatAfterDays?: number;
-  scrollPercentageToTrigger?: number;
-  delaySecondsAndTrigger?: number;
-  triggerOnExitIntent?: boolean;
-  touchDeviceSensitivity?: number;
-  scrollDebounceMillis?: number;
-  triggerOnPageLoad?: boolean;
-  handleScrollBars?: boolean;
-  LSItemKey?: string;
-}
+  onBeforeMount: Boolean;
+};
 
 export type MouseHandler = {
   addMouseListener: () => void;

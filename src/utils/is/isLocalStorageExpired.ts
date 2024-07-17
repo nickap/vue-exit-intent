@@ -1,11 +1,11 @@
-import type { IOptions } from '../../types';
+import type { Options } from '../../types';
 
 /**
  * Checks whether the localStorage item has expired or not.
  * @param {Object} options - Options object containing LSItemKey and repeatAfterDays.
  * @returns {boolean} - Returns a boolean indicating whether the localStorage item has expired or not.
  */
-export function isLocalStorageExpired(options: IOptions): boolean {
+export function isLocalStorageExpired(options: Options): boolean {
   const oldMillis = localStorage.getItem(options.LSItemKey);
   if (oldMillis) {
     /* LSItem exist and repeatAfterDays is 0. Should not trigger again. */

@@ -3,19 +3,17 @@ import { useVueExitIntent } from '@/composables/useVueExitIntent';
 import { defaultOptions } from '@/utils';
 import { shallowMount } from '@vue/test-utils';
 
-describe('useVueExitIntent composable basic funcionality', () => {
+describe('Respects option onBeforeMount', () => {
   afterEach(() => {
     localStorage.clear();
   });
-  test('Initializes correctly with default options', async () => {
-    const userOptions = { ...defaultOptions };
 
+  test('Initializes with default options when onBeforeMount is true', async () => {
     const App = {
       template: `<div></div>`,
       setup() {
         const { isShowing, isAllowedToGetTriggered, isUnsubscribed } =
-          useVueExitIntent(userOptions);
-
+          useVueExitIntent(defaultOptions);
         return {
           isShowing,
           isAllowedToGetTriggered,
@@ -24,39 +22,43 @@ describe('useVueExitIntent composable basic funcionality', () => {
       }
     };
 
-    const wrapper = shallowMount(App);
-    await wrapper.vm.$nextTick();
+    const wrapper = await shallowMount(App);
 
     const { isShowing, isAllowedToGetTriggered, isUnsubscribed } = wrapper.vm;
 
     expect(isShowing).toBe(false);
     expect(isAllowedToGetTriggered).toBe(true);
     expect(isUnsubscribed).toBe(false);
-    expect(localStorage.getItem(userOptions.LSItemKey)).toBeFalsy();
+    expect(localStorage.getItem(defaultOptions.LSItemKey)).toBeFalsy();
   });
 
-  test('Triggers on mount when triggerOnPageLoad is true', async () => {
-    const userOptions = { ...defaultOptions, triggerOnPageLoad: true };
+  test('Initializes correctly when onBeforeMount is true', async () => {
+    const userOptions = {
+      ...defaultOptions,
+      onBeforeMount: true,
+      triggerOnPageLoad: true
+    };
 
     const App = {
       template: `<div></div>`,
       setup() {
-        const { isShowing, isAllowedToGetTriggered } =
+        const { isShowing, isAllowedToGetTriggered, isUnsubscribed } =
           useVueExitIntent(userOptions);
-
         return {
           isShowing,
-          isAllowedToGetTriggered
+          isAllowedToGetTriggered,
+          isUnsubscribed
         };
       }
     };
 
-    const wrapper = shallowMount(App);
-    await wrapper.vm.$nextTick();
+    const wrapper = await shallowMount(App);
 
-    const { isShowing, isAllowedToGetTriggered } = wrapper.vm;
+    const { isShowing, isAllowedToGetTriggered, isUnsubscribed } = wrapper.vm;
 
     expect(isShowing).toBe(true);
     expect(isAllowedToGetTriggered).toBe(false);
+    expect(isUnsubscribed).toBe(false);
+    expect(localStorage.getItem(userOptions.LSItemKey)).toBeTruthy();
   });
 });

@@ -10,5 +10,12 @@
     {
       "path": "./tsconfig.vitest.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+  }
 }

@@ -1,5 +1,5 @@
 import { debounce } from '../index';
-import type { IOptions, ScrollHandler } from '../../types';
+import type { Options, ScrollHandler } from '../../types';
 
 /**
  * Creates a new Object of type ScrollHandler that provides methods
@@ -9,7 +9,7 @@ import type { IOptions, ScrollHandler } from '../../types';
  * @returns An Object of type ScrollHandler with methods to add and remove the debounced scroll event listener.
  */
 export const scrollHandler = (
-  options: IOptions,
+  options: Options,
   callback: () => void
 ): ScrollHandler => {
   const debouncedScrollHandler = debounce(

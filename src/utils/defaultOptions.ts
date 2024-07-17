@@ -1,9 +1,9 @@
-import type { IOptions } from '../types';
+import type { Options } from '../types';
 
 /**
  * Default configuration options for the exit intent composable.
  */
-export const defaultOptions: IOptions = {
+export const defaultOptions: Options = {
   repeatAfterDays: 0,
   scrollPercentageToTrigger: 0,
   delaySecondsAndTrigger: 0,
@@ -12,5 +12,6 @@ export const defaultOptions: IOptions = {
   scrollDebounceMillis: 300,
   triggerOnPageLoad: false,
   handleScrollBars: false,
-  LSItemKey: 'vue-exit-intent'
+  LSItemKey: 'vue-exit-intent',
+  onBeforeMount: false
 };

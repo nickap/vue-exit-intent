@@ -59,6 +59,7 @@ const {
 | **triggerOnPageLoad** | false | Boolean | false |
 | **handleScrollBars** | false | Boolean | false |
 | **LSItemKey** | 'vue-exit-intent' | String  | false |
+| **onBeforeMount** | false | Boolean  | false |
 
 ### Options Description
 - **repeatAfterDays**  
@@ -103,6 +104,10 @@ Will be eather `auto` (when isShowing is `false`), or `hidden` (when isShowing i
 - **LSItemKey**  
 Key of Local Storage item.
 You can use a different key to show multiple pop-ups with different behaviour/content.
+
+- **onBeforeMount**  
+Determines whether the initialization of the composable occurs during the `onBeforeMount` lifecycle hook instead of the default `onMounted` hook.  
+This allows you to set up the exit intent before your component is mounted.
 
 ## Contribute
 Feel free to contribute, message me for your ideas.  
