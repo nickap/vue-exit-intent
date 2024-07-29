@@ -1,4 +1,4 @@
-import type { Options } from '../../types';
+import type { Options } from '@/types';
 
 /**
  * Checks if the user has scrolled to a certain percentage of the page height.

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import modalPopUp from './components/modalPopUp.vue';
-import { useVueExitIntent } from './composables/useVueExitIntent.js';
+import modalPopUp from '@/components/modalPopUp.vue';
+import { useVueExitIntent } from '@/composables/useVueExitIntent.js';
 
 const LSItemKey = 'demo-vue-exit-intent';
 

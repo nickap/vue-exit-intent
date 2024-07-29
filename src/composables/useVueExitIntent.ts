@@ -99,7 +99,7 @@ export function useVueExitIntent(userOptions: Partial<Options> = {}) {
     }
   });
 
-  if (options.onBeforeMount) {
+  if (options.setupBeforeMount) {
     onBeforeMount(() => {
       setup();
     });

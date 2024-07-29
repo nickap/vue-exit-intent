@@ -1,4 +1,4 @@
-import type { Options, TouchDeviceHandler } from '../../types';
+import type { Options, TouchDeviceHandler } from '@/types';
 
 /**
  * Adds touch event listeners for touch devices. Only call this function on touch devices.

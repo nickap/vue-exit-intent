@@ -1,5 +1,5 @@
-import { debounce } from '../index';
-import type { Options, ScrollHandler } from '../../types';
+import { debounce } from '@/utils';
+import type { Options, ScrollHandler } from '@/types';
 
 /**
  * Creates a new Object of type ScrollHandler that provides methods

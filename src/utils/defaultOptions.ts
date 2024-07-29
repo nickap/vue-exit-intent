@@ -1,4 +1,4 @@
-import type { Options } from '../types';
+import type { Options } from '@/types';
 
 /**
  * Default configuration options for the exit intent composable.
@@ -13,5 +13,5 @@ export const defaultOptions: Options = {
   triggerOnPageLoad: false,
   handleScrollBars: false,
   LSItemKey: 'vue-exit-intent',
-  onBeforeMount: false
+  setupBeforeMount: false
 };

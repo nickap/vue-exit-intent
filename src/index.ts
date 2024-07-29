@@ -1,1 +1,1 @@
-export { useVueExitIntent } from './composables/useVueExitIntent';
+export { useVueExitIntent } from '@/composables/useVueExitIntent';

@@ -8,7 +8,7 @@ export type Options = {
   triggerOnPageLoad: boolean;
   handleScrollBars: boolean;
   LSItemKey: string;
-  onBeforeMount: Boolean;
+  setupBeforeMount: Boolean;
 };
 
 export type MouseHandler = {

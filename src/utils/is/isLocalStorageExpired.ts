@@ -1,4 +1,4 @@
-import type { Options } from '../../types';
+import type { Options } from '@/types';
 
 /**
  * Checks whether the localStorage item has expired or not.
