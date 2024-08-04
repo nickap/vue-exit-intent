@@ -1,4 +1,4 @@
-# Enhance User Engagement with Exit Intent Detection.
+# Boost User Engagement with Exit Intent Detection.
 
 ### A composable to show your modal when a user is about to leave the page or another threshold reached.
 
@@ -10,6 +10,8 @@ The very first version of this package created in favor of [this](https://dev.to
 
 ### Import the composable and show your content according to the value of `isShowing`.
 
+When the exit intent is triggered, a key-value pair (with the current timestamp) is stored in **localStorage**. The timestamp will be re-evaluated according to the given options the next time the user intends to exit your app.
+
 ## Add the package
 
 ```
@@ -18,32 +20,40 @@ npm i vue-exit-intent
 
 ##### If you are using Vue versions earlier than 2.7, you need to install the @vue/composition-api plugin because Composition API is not supported natively.
 
-## Use the composable
+## Use the package
 
 ```javascript
 <sript setup lang="ts">
 import { useVueExitIntent } from 'vue-exit-intent'
 
-const options = {
-  LSItemKey: 'local-storage-key',
-  handleScrollBars: true
-}
-
-const { isShowing, close } = useVueExitIntent(options);
+const { isShowing, close } = useVueExitIntent();
 </script>
 ```
 
 ```html
 <template>
-  <yourModalPopUp v-if="isShowing" @close="close"></yourModalPopUp>
+  <dialog :open="isShowing">
+    <p>Exit intent detected!</p>
+    <form method="dialog">
+      <button value="ok" @click="close()">OK</button>
+    </form>
+  </dialog>
 </template>
 ```
 
-## Available helpers
+# Available helpers & Options
 
-If you use all available helpers your code would look like this:
+If you use all available helpers & some options your code will be like this:
 
 ```javascript
+const options = {
+  repeatAfterDays: 1,
+  scrollPercentageToTrigger: 50,
+  handleScrollBars: true,
+  LSItemKey: 'exit-intent-local-storage-key',
+  setupBeforeMount: true
+};
+
 const {
   isShowing,
   isAllowedToGetTriggered,
@@ -53,6 +63,8 @@ const {
   unsubscribe
 } = useVueExitIntent(options);
 ```
+
+## Helpers
 
 `isShowing`: a reactive boolean ref that tracks whether the exit intent popup is currently visible.  
 `isAllowedToGetTriggered`: a reactive boolean ref that tracks whether the exit intent popup is allowed to trigger.  
