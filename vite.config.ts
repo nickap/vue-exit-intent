@@ -28,9 +28,9 @@ export default defineConfig(({ mode }) => {
         vue(),
         dts({
           insertTypesEntry: true,
-          include: ['src'],
-          exclude: ['src/utils'],
-          outDir: 'dist'
+          rollupTypes: true,
+          tsconfigPath: './tsconfig.lib.json',
+          exclude: ['src/utils', 'src/tests']
         })
       ],
       resolve: {
