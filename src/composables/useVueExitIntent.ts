@@ -6,7 +6,7 @@ import {
   mouseHandler,
   scrollHandler,
   touchDeviceHandler
-} from '@/utils/';
+} from '@/utils';
 import type { Options } from '@/types';
 
 export function useVueExitIntent(userOptions: Partial<Options> = {}) {
