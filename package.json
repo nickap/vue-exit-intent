@@ -30,8 +30,11 @@
     "format": "prettier --write src/",
     "test": "vitest"
   },
-  "dependencies": {
-    "vue": "^3.4.26"
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "optionalPeerDependencies": {
+    "@vue/composition-api": "^1.0.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.10.2",

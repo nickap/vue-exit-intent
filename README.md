@@ -16,6 +16,8 @@ The very first version of this package created in favor of [this](https://dev.to
 npm i vue-exit-intent
 ```
 
+##### If you are using Vue versions earlier than 2.7, you need to install the @vue/composition-api plugin because Composition API is not supported natively.
+
 ## Use the composable
 
 ```javascript
