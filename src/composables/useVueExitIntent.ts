@@ -1,4 +1,4 @@
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, onBeforeMount } from 'vue';
 import {
   defaultOptions,
   isTouchDevice,
@@ -6,11 +6,11 @@ import {
   mouseHandler,
   scrollHandler,
   touchDeviceHandler
-} from '../utils/';
-import type { IOptions, IUserOptions } from '../types';
+} from '@/utils';
+import type { Options } from '@/types';
 
-export function useVueExitIntent(userOptions: IUserOptions = {}) {
-  const options: IOptions = { ...defaultOptions, ...userOptions };
+export function useVueExitIntent(userOptions: Partial<Options> = {}) {
+  const options: Options = { ...defaultOptions, ...userOptions };
 
   const unsubscribedLSItemKey: string = options.LSItemKey + '-unsubscribed';
 
@@ -54,7 +54,7 @@ export function useVueExitIntent(userOptions: IUserOptions = {}) {
     isAllowedToGetTriggered.value = false;
   }
 
-  onMounted(() => {
+  const setup = () => {
     const unsubscribedValue = localStorage.getItem(unsubscribedLSItemKey);
     isUnsubscribed.value = unsubscribedValue
       ? JSON.parse(unsubscribedValue)
@@ -62,34 +62,52 @@ export function useVueExitIntent(userOptions: IUserOptions = {}) {
 
     isAllowedToGetTriggered.value =
       isLocalStorageExpired(options) && !isUnsubscribed.value;
-  });
+  };
+
+  const initialize = () => {
+    if (options.triggerOnExitIntent) {
+      if (options.touchDeviceSensitivity && isTouchDevice()) {
+        addTouchListeners();
+      } else {
+        addMouseListener();
+      }
+    }
+    if (options.delaySecondsAndTrigger) {
+      setTimeout(() => {
+        fire();
+      }, options.delaySecondsAndTrigger * 1000);
+    }
+    if (options.triggerOnPageLoad) {
+      fire();
+    }
+    if (options.scrollPercentageToTrigger) {
+      addScrollListener();
+    }
+  };
+
+  const disable = () => {
+    removeMouseLeaveListeners();
+    removeScrollListeners();
+    removeTouchDeviceListeners();
+  };
 
   watch(isAllowedToGetTriggered, (newValue) => {
     if (newValue) {
-      if (options.triggerOnExitIntent) {
-        if (options.touchDeviceSensitivity && isTouchDevice()) {
-          addTouchListeners();
-        } else {
-          addMouseListener();
-        }
-      }
-      if (options.delaySecondsAndTrigger) {
-        setTimeout(() => {
-          fire();
-        }, options.delaySecondsAndTrigger * 1000);
-      }
-      if (options.triggerOnPageLoad) {
-        fire();
-      }
-      if (options.scrollPercentageToTrigger) {
-        addScrollListener();
-      }
+      initialize();
     } else {
-      removeMouseLeaveListeners();
-      removeScrollListeners();
-      removeTouchDeviceListeners();
+      disable();
     }
   });
+
+  if (options.setupBeforeMount) {
+    onBeforeMount(() => {
+      setup();
+    });
+  } else {
+    onMounted(() => {
+      setup();
+    });
+  }
 
   return {
     isShowing,

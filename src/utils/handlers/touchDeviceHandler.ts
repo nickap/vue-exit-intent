@@ -1,4 +1,4 @@
-import type { IOptions, TouchDeviceHandler } from '../../types';
+import type { Options, TouchDeviceHandler } from '@/types';
 
 /**
  * Adds touch event listeners for touch devices. Only call this function on touch devices.
@@ -7,7 +7,7 @@ import type { IOptions, TouchDeviceHandler } from '../../types';
  * @returns {TouchDeviceHandler} - Object of type TouchDeviceHandler, containing addTouchListeners and removeTouchDeviceListeners functions.
  */
 export function touchDeviceHandler(
-  options: IOptions,
+  options: Options,
   callback: () => void
 ): TouchDeviceHandler {
   let startY: number = 0;

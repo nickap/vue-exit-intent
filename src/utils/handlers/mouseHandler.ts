@@ -1,4 +1,4 @@
-import type { MouseHandler } from '../../types';
+import type { MouseHandler } from '@/types';
 
 /**
  * Creates a mouse listener that triggers a callback when the mouse leaves the document.

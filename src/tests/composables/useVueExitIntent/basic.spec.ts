@@ -11,7 +11,6 @@ describe('useVueExitIntent composable basic funcionality', () => {
     const userOptions = { ...defaultOptions };
 
     const App = {
-      // TODO: Fix the need to have a template? Why to have a mounted hook?
       template: `<div></div>`,
       setup() {
         const { isShowing, isAllowedToGetTriggered, isUnsubscribed } =
