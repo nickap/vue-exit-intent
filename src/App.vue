@@ -76,4 +76,17 @@ const {
   overflow-x: auto;
   font-size: 14px;
 }
+
+dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  padding: 20px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+  background: white;
+  border-radius: 8px;
+  margin: 0;
+}
 </style>
