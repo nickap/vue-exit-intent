@@ -9,6 +9,7 @@ export type Options = {
   handleScrollBars: boolean;
   LSItemKey: string;
   setupBeforeMount: Boolean;
+  inactiveSeconds: number;
 };
 
 export type MouseHandler = {

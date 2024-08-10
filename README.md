@@ -77,16 +77,17 @@ const {
 
 | Key                           | Default Value     | Type    | Required |
 | ----------------------------- | ----------------- | ------- | -------- |
-| **repeatAfterDays**           | 7                 | Number  | false    |
-| **scrollPercentageToTrigger** | 0                 | Number  | false    |
-| **delaySecondsAndTrigger**    | 0                 | Number  | false    |
-| **triggerOnExitIntent**       | true              | Boolean | false    |
-| **touchDeviceSensitivity**    | 15                | Number  | false    |
-| **scrollDebounceMillis**      | 300               | Number  | false    |
-| **triggerOnPageLoad**         | false             | Boolean | false    |
-| **handleScrollBars**          | false             | Boolean | false    |
-| **LSItemKey**                 | 'vue-exit-intent' | String  | false    |
-| **setupBeforeMount**          | false             | Boolean | false    |
+| **repeatAfterDays**           | 7                 | number  | false    |
+| **scrollPercentageToTrigger** | 0                 | number  | false    |
+| **delaySecondsAndTrigger**    | 0                 | number  | false    |
+| **triggerOnExitIntent**       | true              | boolean | false    |
+| **touchDeviceSensitivity**    | 15                | number  | false    |
+| **scrollDebounceMillis**      | 300               | number  | false    |
+| **triggerOnPageLoad**         | false             | boolean | false    |
+| **handleScrollBars**          | false             | boolean | false    |
+| **LSItemKey**                 | 'vue-exit-intent' | string  | false    |
+| **setupBeforeMount**          | false             | boolean | false    |
+| **inactiveSeconds**           | 0                 | number  | false    |
 
 ### Options Description
 
@@ -136,6 +137,10 @@ const {
 - **setupBeforeMount**  
   Determines whether the initialization of the composable occurs during the `onBeforeMount` lifecycle hook instead of the default `onMounted` hook.  
   This options allows you to set up the exit intent before your component is mounted.
+
+- **inactiveSeconds**  
+  Delay, in seconds, before activating mouse, touch, and scroll listeners to track user behavior and potentially trigger the popup after an exit intent is detected (mouse leaves the viewport, scroll percentage reached, or fast touch scroll up). This delay helps prevent the immediate display of the popup, ensuring it only appears if the user wants to leave the page after the specified time. Set to 0 to disable this delay.
+  **This option DELAYS adding mouse, scroll and touch listeners**
 
 ## Contribute
 

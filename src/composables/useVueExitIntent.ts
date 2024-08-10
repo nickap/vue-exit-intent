@@ -64,7 +64,7 @@ export function useVueExitIntent(userOptions: Partial<Options> = {}) {
       isLocalStorageExpired(options) && !isUnsubscribed.value;
   };
 
-  const initialize = () => {
+  const addListeners = () => {
     if (options.triggerOnExitIntent) {
       if (options.touchDeviceSensitivity && isTouchDevice()) {
         addTouchListeners();
@@ -72,6 +72,12 @@ export function useVueExitIntent(userOptions: Partial<Options> = {}) {
         addMouseListener();
       }
     }
+    if (options.scrollPercentageToTrigger) {
+      addScrollListener();
+    }
+  };
+
+  const initialize = () => {
     if (options.delaySecondsAndTrigger) {
       setTimeout(() => {
         fire();
@@ -80,8 +86,13 @@ export function useVueExitIntent(userOptions: Partial<Options> = {}) {
     if (options.triggerOnPageLoad) {
       fire();
     }
-    if (options.scrollPercentageToTrigger) {
-      addScrollListener();
+
+    if (options.inactiveSeconds) {
+      setTimeout(() => {
+        addListeners();
+      }, options.inactiveSeconds * 1000);
+    } else {
+      addListeners();
     }
   };
 

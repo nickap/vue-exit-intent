@@ -13,5 +13,6 @@ export const defaultOptions: Options = {
   triggerOnPageLoad: false,
   handleScrollBars: false,
   LSItemKey: 'vue-exit-intent',
-  setupBeforeMount: false
+  setupBeforeMount: false,
+  inactiveSeconds: 0
 };

@@ -2,7 +2,8 @@
 import { useVueExitIntent } from '@/composables/useVueExitIntent.js';
 
 const options = {
-  handleScrollBars: true
+  handleScrollBars: true,
+  inactiveSeconds: 3
 };
 
 const {
@@ -19,8 +20,10 @@ const {
   <div id="demo-page">
     <h1>Vue Exit Intent Demo Page</h1>
     <p>
-      <b>Desktop</b>: Move your mouse outside the document.<br />
-      <b>Touch Device</b>: After you scroll down the document, scroll up fast.
+      <b>Desktop</b>: Wait 3 seconds and move your mouse outside the
+      document.<br />
+      <b>Touch Device</b>: Wait 3 seconds and after you scroll down the
+      document, scroll up fast.
     </p>
     <p>
       Do you want to unsubscribe from this popup, and to not trigger in the
@@ -32,6 +35,8 @@ const {
       localStorage entry and reset the state of the plugin
       <button @click="resetState">Reset State</button>
     </p>
+
+    <pre>options: {{ options }}</pre>
 
     <div class="current-state">
       <p><strong>Current State:</strong></p>
