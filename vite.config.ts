@@ -22,7 +22,8 @@ export default defineConfig(({ mode }) => {
               vue: 'Vue'
             }
           }
-        }
+        },
+        minify: false
       },
       plugins: [
         vue(),
