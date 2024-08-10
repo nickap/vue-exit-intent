@@ -1,6 +1,6 @@
 {
   "name": "vue-exit-intent",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Exit Intent Composable. Show your content when a user is leaving, or another threshold reached.",
   "author": "nickap <dev.texng@simplelogin.com>",
   "license": "MIT",
