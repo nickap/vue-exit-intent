@@ -59,7 +59,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nickap/vue-exit-intent.git"
+    "url": "git+https://github.com/Compare-My-Move/vue-exit-intent.git"
   },
   "keywords": [
     "exit",
@@ -76,7 +76,7 @@
     "vue3"
   ],
   "bugs": {
-    "url": "https://github.com/nickap/vue-exit-intent/issues"
+    "url": "https://github.com/Compare-My-Move/vue-exit-intent/issues"
   },
-  "homepage": "https://github.com/nickap/vue-exit-intent#readme"
+  "homepage": "https://github.com/Compare-My-Move/vue-exit-intent#readme"
 }
