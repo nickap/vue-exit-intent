@@ -34,6 +34,7 @@ export function useVueExitIntent(userOptions: Partial<Options> = {}) {
   }
 
   function fire() {
+    console.log('fireing');
     isShowing.value = true;
     isAllowedToGetTriggered.value = false;
     localStorage.setItem(options.LSItemKey, JSON.stringify(Date.now()));
