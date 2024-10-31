@@ -1,4 +1,4 @@
-# Boost User Engagement with Exit Intent Detection.
+# CMM version : Boost User Engagement with Exit Intent Detection.
 
 ### A composable to show your modal when a user is about to leave the page or another threshold reached.
 
